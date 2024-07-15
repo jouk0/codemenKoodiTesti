@@ -1,0 +1,123 @@
+@if (showNewUserInputForm) {
+    <section class="background">
+        <section class="userCreationForm">
+            <header>
+                <h1>Luo uusi käyttäjä</h1>
+                <a href="#" title="Sulje lomake" (click)="closeForm($event)">x</a>
+            </header>
+            <form [formGroup]="myForm" (ngSubmit)="submit()">
+                <article>
+                    <div class="inputRow">
+                        <label for="name">Nimi:</label>
+                        <input type="text" id="name" name="name" formControlName="name" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="username">Käyttäjätunnus:</label>
+                        <input type="text" id="username" name="username" formControlName="username" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="email">Sähköpostiosoite:</label>
+                        <input type="text" id="email" name="email" formControlName="email" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="website">Nettisivu:</label>
+                        <input type="text" id="website" name="website" formControlName="website" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="street">Katuosoite:</label>
+                        <input type="text" id="street" name="street" formControlName="street" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="suite">Asunto:</label>
+                        <input type="text" id="suite" name="suite" formControlName="suite" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="zipcode">Postinumero:</label>
+                        <input type="text" id="zipcode" name="zipcode" formControlName="zipcode" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="city">Kaupunki:</label>
+                        <input type="text" id="city" name="city" formControlName="city" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="lat">Latitude:</label>
+                        <input type="text" id="lat" name="lat" formControlName="lat" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="lng">Longitude:</label>
+                        <input type="text" id="lng" name="lng" formControlName="lng" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="phone">Puhelinnumero:</label>
+                        <input type="text" id="phone" name="phone" formControlName="phone" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="companyName">Yrityksen nimi:</label>
+                        <input type="text" id="companyName" name="companyName" formControlName="companyName" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="catchPhrase">Yrityksen slogan:</label>
+                        <input type="text" id="catchPhrase" name="catchPhrase" formControlName="catchPhrase" />
+                    </div>
+                    <div class="inputRow">
+                        <label for="bs">Yrityksen ala:</label>
+                        <input type="text" id="bs" name="bs" formControlName="bs" />
+                    </div>
+                    <div class="buttonRow">
+                        <button type="submit">Tallenna</button>
+                    </div>
+                </article>
+            </form>
+        </section>
+    </section>
+}
+<section class="userDatabase">
+    <header>
+        <h1>Asiakkaat</h1>
+        <a href="#" title="Lisää uusi asiakas" (click)="addNewUser($event)">+</a>
+    </header>
+    @for (user of users; track user.id; let i = $index) {
+        <article title="{{user.name}}">
+            <header>
+                <h1><strong>Nimi: </strong>{{user.name}}</h1>
+                <h2><strong>Käyttäjätunnus: </strong>{{user.username}}</h2>
+                <h3><strong>Sähköpostiosoite: </strong> <a href="mailto:{{user.email}}">{{user.email}}</a></h3>
+                <h4><strong>Nettisivu: </strong><a title="{{user.website}}" href="{{user.website}}">{{user.website}}</a></h4>
+                <a class="remove" href="#" title="Poista asiakas" (click)="removeClient($event, i)">Poista</a>
+                <a class="modify" href="#" title="Muokkaa asiakasta" (click)="modifyClient($event, user, i)">Muokkaa</a>
+            </header>
+            <table [cellPadding]="0" [cellSpacing]="0">
+                <thead>
+                    <tr>
+                        <th>Osoite</th>
+                        <th>Geo positio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{user.address.street}}, {{user.address.suite}}, {{user.address.zipcode}}, {{user.address.city}}</td>
+                        <td>{{user.address.geo.lat}}, {{user.address.geo.lng}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table [cellPadding]="0" [cellSpacing]="0">
+                <thead>
+                    <tr>
+                        <th>Puhelinnumero</th>
+                        <th>Yritys</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        
+                        <td><a href="tel:{{user.phone}}">{{user.phone}}</a></td>
+                        <td><strong>{{user.company.name}}</strong> {{user.company.catchPhrase}} {{user.company.bs}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+    }
+    @empty {
+        <h1>Dataa haetaa tai käyttäjiä ei löydy</h1>
+    }
+</section>
