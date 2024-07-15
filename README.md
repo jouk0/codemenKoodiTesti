@@ -1,3 +1,8 @@
+# Backend
+`cd backend`
+`node server.mjs`
+This opens the backend to port 3000.
+
 # CodemenTest
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
